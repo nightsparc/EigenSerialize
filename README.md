@@ -13,6 +13,12 @@ The error occures whenever `boost/serialization/shared_ptr.hpp` is included - re
 ```C++
 #include <boost/serialization/shared_ptr.hpp>
 ``` 
+To compile use:
+
+```
+g++-7 -std=c++17 -o main.o main.cpp -lboost_serialization -lstdc++
+```
+
 
 Seems to be compiler-related:
 - GCC7/8 failes with the mesage above (regardless if `--std=c++17` or `--std=c++20`)
