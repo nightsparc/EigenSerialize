@@ -5,7 +5,6 @@
 #include <boost/serialization/split_free.hpp>
 
 #include <Eigen/Core>
-#include <Eigen/StdVector>
 
 // !! Conflicting include! Whenever the serialization wrapper for shared_ptrs is included
 // the compilation fails!
@@ -13,11 +12,6 @@
 // error: incomplete type ‘Eigen::internal::traits<boost::serialization::U>’ used in nested name specifier
 // enum { has_direct_access = (traits<Derived>::Flags & DirectAccessBit) ? 1 : 0,
 #include <boost/serialization/shared_ptr.hpp>
-
-using namespace std;
-using namespace boost;
-using namespace boost::archive;
-using namespace boost::serialization;
 
 // Serialization methods for fixed-size Eigen::Matrix type
 namespace boost {
@@ -139,9 +133,11 @@ class TestClass
 
 int main(void)
 {
+    using namespace boost::archive;
+
     // Serialize
     TestClass TestA;
-    ofstream oss("test.log");
+    std::ofstream oss("test.log");
     {
         text_oarchive oa(oss);
         oa << TestA;
@@ -149,7 +145,7 @@ int main(void)
 
     // deserialize now
     TestClass TestB;
-    ifstream iss("test.log");
+    std::ifstream iss("test.log");
     {
         text_iarchive ia(iss);
         ia >> TestB;
