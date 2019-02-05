@@ -15,9 +15,8 @@ The error occures whenever `boost/serialization/shared_ptr.hpp` is included - re
 ``` 
 To compile use:
 
-```
-g++-7 -std=c++17 -o main.o main.cpp -lboost_serialization -lstdc++
-```
+- G++: `g++-7 -std=c++17 -o main.o main.cpp -lboost_serialization`
+- Clang: `clang -std=c++17 -o main.o main.cpp -lboost_serialization -lstdc++`
 
 
 Seems to be compiler-related:
