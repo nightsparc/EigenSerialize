@@ -17,6 +17,7 @@
 // enum { has_direct_access = (traits<Derived>::Flags & DirectAccessBit) ? 1 : 0,
 #include <boost/serialization/shared_ptr.hpp>
 
+<<<<<<< HEAD
 /**
  * @brief Local assert helper macro for wrong row parameters
  * @param aExpression Assertion expression which must be evaluate to true.
@@ -37,6 +38,8 @@
 #endif
 
 
+=======
+>>>>>>> a3de9cf141eec2f2370ec3a9c15fdead279bec4b
 // Serialization methods for fixed-size Eigen::Matrix type
 namespace boost {
     namespace serialization {
@@ -51,6 +54,7 @@ namespace boost {
                 >
         inline void serialize(Archive & arArchive,
                               Eigen::Matrix<_Scalar,
+<<<<<<< HEAD
                                             _Rows,
                                             _Cols,
                                             _Options,
@@ -86,6 +90,82 @@ namespace boost {
             if(lMatrixSize > 0)
             {
                 arArchive & boost::serialization::make_nvp("data", boost::serialization::make_array(arMatrix.data(), lMatrixSize));
+=======
+                              _Rows,
+                              _Cols,
+                              _Options,
+                              _MaxRows,
+                              _MaxCols> & arMatrix,
+                              const unsigned int aVersion)
+        {
+            boost::serialization::split_free(arArchive, arMatrix, aVersion);
+        }
+
+        template<
+                class Archive,
+                typename _Scalar,
+                int _Rows,
+                int _Cols,
+                int _Options,
+                int _MaxRows,
+                int _MaxCols
+                >
+        inline void save(Archive & arArchive,
+                         const Eigen::Matrix<_Scalar,
+                         _Rows,
+                         _Cols,
+                         _Options,
+                         _MaxRows,
+                         _MaxCols> & arMatrix,
+                         const unsigned int)
+        {
+            typedef typename Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Index TEigenIndex;
+
+            const TEigenIndex lRows = arMatrix.rows();
+            const TEigenIndex lCols = arMatrix.cols();
+
+            arArchive << lRows;
+            arArchive << lCols;
+
+            if(lRows > 0 && lCols > 0)
+            {
+                arArchive & boost::serialization::make_array(arMatrix.data(), arMatrix.size());
+            }
+        }
+
+        template<
+                class Archive,
+                typename _Scalar,
+                int _Rows,
+                int _Cols,
+                int _Options,
+                int _MaxRows,
+                int _MaxCols
+                >
+        inline void load(Archive & arArchive,
+                         Eigen::Matrix<_Scalar,
+                         _Rows,
+                         _Cols,
+                         _Options,
+                         _MaxRows,
+                         _MaxCols> & arMatrix,
+                         const unsigned int)
+        {
+            typedef typename Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Index TEigenIndex;
+
+            TEigenIndex lRows, lCols;
+
+            // deserialize meta data
+            arArchive & lRows;
+            arArchive & lCols;
+
+            // do some error handling here
+
+            if(lRows > 0 && lCols > 0)
+            {
+                // deserialize data
+                arArchive & boost::serialization::make_array(arMatrix.data(), arMatrix.size());
+>>>>>>> a3de9cf141eec2f2370ec3a9c15fdead279bec4b
             }
         }
 

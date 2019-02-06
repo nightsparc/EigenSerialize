@@ -1,6 +1,8 @@
 # EigenSerialize
 Test repo for Eigen matrix serialization with boost
 
+See SO for discussion and solution: https://stackoverflow.com/questions/54534047/eigen-matrix-boostserialization-c17
+
 Somewhere in the code an Eigen type-trait gets instantiated which tries to access an incomplete
 type of boost::serialization. Totally strang. Works with C++11/14...??!
 
