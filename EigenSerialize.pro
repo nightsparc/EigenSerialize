@@ -9,3 +9,6 @@ SOURCES += \
         main.cpp
 
 LIBS += -lboost_serialization
+
+CONFIG(debug, release|debug):DEFINES += DEBUG
+CONFIG(release, release|debug):DEFINES += NDEBUG
